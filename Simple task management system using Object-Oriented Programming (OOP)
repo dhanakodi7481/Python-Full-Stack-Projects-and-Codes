@@ -1,0 +1,268 @@
+class Task:
+    def __init__(self, title, description, due_date, status="Pending"):
+        self.title = title
+        self.description = description
+        self.due_date = due_date
+        self.status = status
+
+    def __repr__(self):
+        return f"Task: {self.title} | Due: {self.due_date} | Status: {self.status}"
+
+
+# Define the TaskManager class
+class TaskManager:
+    def __init__(self):
+        self.tasks = []  # List to hold tasks
+
+    def add_task(self, title, description, due_date):
+        """Add a new task"""
+        new_task = Task(title, description, due_date)
+        self.tasks.append(new_task)
+        print(f"Task '{title}' added successfully!")
+
+    def view_tasks(self):
+        """View all tasks"""
+        if not self.tasks:
+            print("No tasks available.")
+        else:
+            for idx, task in enumerate(self.tasks, 1):
+                print(f"{idx}. {task}")
+
+    def update_task(self, task_id, title=None, description=None, due_date=None, status=None):
+        """Update an existing task"""
+        if 0 < task_id <= len(self.tasks):
+            task = self.tasks[task_id - 1]
+            if title: task.title = title
+            if description: task.description = description
+            if due_date: task.due_date = due_date
+            if status: task.status = status
+            print(f"Task {task_id} updated successfully!")
+        else:
+            print("Invalid Task ID.")
+
+    def delete_task(self, task_id):
+        """Delete a task by its ID"""
+        if 0 < task_id <= len(self.tasks):
+            removed_task = self.tasks.pop(task_id - 1)
+            print(f"Task '{removed_task.title}' deleted successfully!")
+        else:
+            print("Invalid Task ID.")
+
+    def menu(self):
+        """Display menu and handle user input"""
+        while True:
+            print("\n--- Task Management System ---")
+            print("1. Add Task")
+            print("2. View All Tasks")
+            print("3. Update Task")
+            print("4. Delete Task")
+            print("5. Exit")
+            choice = input("Enter your choice: ")
+
+            if choice == "1":
+                title = input("Enter task title: ")
+                description = input("Enter task description: ")
+                due_date = input("Enter task due date (YYYY-MM-DD): ")
+                self.add_task(title, description, due_date)
+            elif choice == "2":
+                self.view_tasks()
+            elif choice == "3":
+                self.view_tasks()
+                task_id = int(input("Enter the task ID to update: "))
+                title = input("Enter new title (leave blank to keep current): ")
+                description = input("Enter new description (leave blank to keep current): ")
+                due_date = input("Enter new due date (leave blank to keep current): ")
+                status = input("Enter new status (Pending/Completed, leave blank to keep current): ")
+                self.update_task(task_id, title if title else None,
+                                 description if description else None,
+                                 due_date if due_date else None,
+                                 status if status else None)
+            elif choice == "4":
+                self.view_tasks()
+                task_id = int(input("Enter the task ID to delete: "))
+                self.delete_task(task_id)
+            elif choice == "5":
+                print("Exiting the Task Management System...")
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+# Start the task manager application
+if __name__ == "__main__":
+    task_manager = TaskManager()
+    task_manager.menu()
+
+------------------------------------------------------------------------------------------------------------------------------
+Sample Output : 
+
+--- Task Management System ---
+1. Add Task
+2. View All Tasks
+3. Update Task
+4. Delete Task
+5. Exit
+Enter your choice: 1
+Enter task title: Complete Python Project
+Enter task description: Build a task management system
+Enter task due date (YYYY-MM-DD): 2024-12-01
+Task 'Complete Python Project' added successfully!
+
+--- Task Management System ---
+1. Add Task
+2. View All Tasks
+3. Update Task
+4. Delete Task
+5. Exit
+Enter your choice: 2
+1. Task: Complete Python Project | Due: 2024-12-01 | Status: Pending
+
+--- Task Management System ---
+1. Add Task
+2. View All Tasks
+3. Update Task
+4. Delete Task
+5. Exit
+Enter your choice: 3
+Enter the task ID to update: 1
+Enter new title (leave blank to keep current): Finish Python Project
+Enter new description (leave blank to keep current): Complete the task and submit
+Enter new due date (leave blank to keep current): 2024-12-05
+Enter new status (Pending/Completed, leave blank to keep current): Completed
+Task 1 updated successfully!
+
+--- Task Management System ---
+1. Add Task
+2. View All Tasks
+3. Update Task
+4. Delete Task
+5. Exit
+Enter your choice: 4
+Enter the task ID to delete: 1
+Task 'Finish Python Project' deleted successfully!
+
+--- Task Management System ---
+1. Add Task
+2. View All Tasks
+3. Update Task
+4. Delete Task
+5. Exit
+Enter your choice: 5
+Exiting the Task Management System...
+
+------------------------------------------------------------------------------------------------------------------------------
+
+simple task management system using Object-Oriented Programming (OOP) principles in Python, here's a basic implementation that will allow you to:
+
+1. Add tasks
+2. View tasks
+3. Update tasks
+4. Delete tasks
+
+
+VIEW TASK EXPLANATION:
+
+
+1. `def view_tasks(self):`:
+   - This defines the method `view_tasks` which belongs to the class (likely `TaskManager` in your case).
+   - The `self` parameter refers to the instance of the class when the method is called. This allows the method to access instance attributes, such as `self.tasks`.
+
+2. **`"""View all tasks"""`**:
+   - This is a docstring, a brief description of what the method does. It's not required but is good practice to include for clarity. In this case, it indicates that this method is responsible for displaying all the tasks.
+
+3. `if not self.tasks:`:
+   - `self.tasks` is assumed to be a list that stores all the tasks in the task manager.
+   - `if not self.tasks:` checks if the `tasks` list is empty. The `not` keyword inverts the truth value. If `self.tasks` is an empty list (`[]`), `not self.tasks` will evaluate to `True`, and the code inside the `if` block will be executed.
+   - This is used to determine whether there are any tasks to display. If there are no tasks in the list, it means the user has not added any tasks yet.
+
+4. `print("No tasks available.")`:
+   - If the `tasks` list is empty, the message `"No tasks available."` is printed to the console, letting the user know that there are no tasks to view.
+
+5. `else:`:
+   - If the `tasks` list is **not empty**, the code in the `else` block is executed.
+
+6. `for idx, task in enumerate(self.tasks, 1):`:
+   - `enumerate(self.tasks, 1)` is used to loop over the `self.tasks` list. 
+     - `enumerate()` is a built-in Python function that allows you to loop through an iterable (like a list) and get both the index (`idx`) and the item (`task`) in each iteration.
+     - The second argument `1` specifies that the indexing should start from 1 instead of the default 0. This is because, typically, task IDs are user-friendly starting at 1 (not 0).
+   - `idx` will hold the index (starting from 1) and `task` will hold the actual task object.
+
+7. `print(f"{idx}. {task}")`:
+   - For each task, the code prints the index number (task ID) and the task's details.
+   - `f"{idx}. {task}"` is a **formatted string literal** (also known as an f-string), which allows you to embed variables (like `idx` and `task`) directly inside the string.
+   - The `task` object is printed directly, which will invoke the `__repr__()` method of the `Task` class (or whichever class the task is an instance of). This method defines how the task is displayed when printed.
+     - For example, if the task is an instance of the `Task` class, its `__repr__()` method might print something like `Task: Complete project | Due: 2024-12-01 | Status: Pending`.
+
+
+UPDATE TASK EXPLANATION:
+
+1. Method Definition:
+- `update_task` is a method that belongs to a class (likely a task management class like `TaskManager`).
+- It takes the following parameters:
+  - `task_id`: The ID of the task you want to update.
+  - `title`: The new title for the task (default is `None` if not provided).
+  - `description`: The new description for the task (default is `None` if not provided).
+  - `due_date`: The new due date for the task (default is `None` if not provided).
+  - `status`: The new status for the task (default is `None` if not provided).
+  
+This method allows you to update any of these task attributes (title, description, due date, or status) by passing only the fields you want to change.
+
+2. Validation: Check if `task_id` is valid
+- This line checks if the `task_id` provided is valid:
+  - `task_id` must be greater than 0 (i.e., it must be a positive integer).
+  - `task_id` must be less than or equal to the number of tasks in the list `self.tasks`.
+  
+  This ensures that the `task_id` corresponds to an existing task in the list. For example, if there are 5 tasks, `task_id` should be between 1 and 5.
+
+3. Accessing the Task:
+- Since Python lists are **zero-indexed**, `task_id - 1` is used to get the task at the correct index in the list.
+  - For example, if `task_id` is 1, we want to access the first task in the list, which is at index `0` (`1 - 1 = 0`).
+  
+- `self.tasks` is assumed to be a list that contains all tasks, and `task` now refers to the task object that we want to update.
+
+4. Updating the Task Attributes
+- These `if` statements check if the corresponding optional parameters (`title`, `description`, `due_date`, `status`) were provided (i.e., they are not `None`).
+- If a value is provided for a field (e.g., `title`), the corresponding attribute of the `task` is updated. 
+
+For example:
+- If `title` is provided, it updates the `title` attribute of the task with the new value.
+- If `description` is provided, it updates the `description` attribute, and so on.
+
+This allows partial updates, meaning you don’t have to provide all the fields (title, description, etc.)—you can update just the ones you want.
+
+5. Confirmation:
+- After updating the task, a confirmation message is printed that shows which task (by `task_id`) was updated successfully.
+
+6. Invalid Task ID:
+- If the `task_id` provided is invalid (i.e., it does not correspond to a valid task in the list), an error message `"Invalid Task ID."` is printed.
+
+
+
+Features and How It Works:
+
+1. Add Task: When you choose option `1`, the program will prompt you to enter a title, description, and due date for a new task.
+   
+2. View All Tasks: Option `2` displays all tasks stored in the system with their status.
+
+3. Update Task: You can update any task by selecting option `3`, entering the task ID, and providing new values for title, description, due date, or status.
+
+4. Delete Task: Option `4` allows you to delete a task by selecting its ID.
+
+5. Exit: Option `5` exits the program.
+
+---
+
+Advantages of Using OOP:
+- Modularity: The code is modular, meaning each class (Task and TaskManager) is responsible for specific functionality. This makes the program easy to maintain and extend.
+- Encapsulation: Task attributes (like `title`, `description`, etc.) are encapsulated inside the `Task` class, and the `TaskManager` class manages a collection of tasks.
+- Reusability: You can easily extend or reuse the `Task` class in other parts of your program if needed (e.g., for task filtering or sorting).
+- Flexibility: The design allows adding more features, such as filtering by status, adding priorities, or even integrating with a database in the future.
+
+---
+Possible Enhancements:
+
+- Task Filtering: Add functionality to filter tasks by their status (e.g., view only "Pending" tasks).
+- Task Sorting: Sort tasks by due date or priority.
+- Data Persistence: Use a file or database (such as JSON or SQLite) to store tasks, so they persist between program runs.
+- Task Priorities: Allow users to set a priority for each task (e.g., High, Medium, Low).
+
+This project is simple yet powerful and can serve as a solid foundation for a more complex task management system. Let me know if you need help implementing any of the enhancements!
